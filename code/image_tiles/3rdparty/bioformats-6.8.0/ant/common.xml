@@ -1,0 +1,34 @@
+<!--
+common.xml
+
+Ant build file for logic common to every component.
+All component build files inherit from this build file.
+Download Apache Ant from http://ant.apache.org/.
+Type "ant -p" for a list of targets.
+-->
+
+<project>
+  <import file="${root.dir}/ant/global.xml"/>
+  <property file="${root.dir}/ant/common.properties"/>
+
+  <!-- Main build targets -->
+
+  <target name="clean" description="remove all build files except artifacts">
+    <delete dir="${build.dir}"/>
+    <delete dir="${basedir}/target"/>
+  </target>
+
+  <!-- Internal build targets -->
+
+  <target name="init-title">
+    <echo>----------=========== ${component.name} ===========----------</echo>
+  </target>
+
+  <target name="init-timestamp">
+    <tstamp>
+      <format property="DATE" pattern="d MMMMM yyyy"/>
+      <format property="YEAR" pattern="yyyy"/>
+    </tstamp>
+  </target>
+
+</project>

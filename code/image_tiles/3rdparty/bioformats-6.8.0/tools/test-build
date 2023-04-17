@@ -1,0 +1,50 @@
+#!/bin/sh
+# This script is used for testing the build, primarily for use
+# with travis, but may be used by hand as well.
+
+set -e
+set -x
+
+# Clean up
+clean()
+{
+    mvn clean
+}
+
+# Test maven build
+maven()
+{
+    mvn install
+}
+
+# Test Ant build targets
+antbuild()
+{
+    (
+      ant clean compile
+      ant clean utils
+      # Do not clean here so that we can potentially archive the
+      # java archives.
+      ant tools dist-bftools dist-matlab dist-octave
+    )
+}
+
+for arg in "$@"
+do
+    case $arg in
+        clean)
+            clean ;;
+        maven)
+            maven ;;
+        ant)
+            antbuild ;;
+        all)
+            clean && maven && antbuild;;
+        *)
+            echo "Invalid argument: \"$arg\"" >&2
+            exit 1
+            ;;
+    esac
+done
+
+exit 0

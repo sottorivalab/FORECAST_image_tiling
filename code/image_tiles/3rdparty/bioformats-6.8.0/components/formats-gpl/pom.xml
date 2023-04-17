@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+    http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ome</groupId>
+    <artifactId>pom-bio-formats</artifactId>
+    <version>6.8.0</version>
+    <relativePath>../..</relativePath>
+  </parent>
+
+  <artifactId>formats-gpl</artifactId>
+
+  <name>Bio-Formats library</name>
+  <description>A library for reading and writing popular microscopy file formats.</description>
+  <url>https://www.openmicroscopy.org/bio-formats</url>
+  <inceptionYear>2005</inceptionYear>
+
+  <licenses>
+    <license>
+      <name>GNU General Public License v2+</name>
+      <url>http://www.gnu.org/licenses/gpl-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.openmicroscopy</groupId>
+      <artifactId>ome-common</artifactId>
+      <version>${ome-common.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${ome-model.group}</groupId>
+      <artifactId>ome-xml</artifactId>
+      <version>${ome-model.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>formats-bsd</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>formats-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openmicroscopy</groupId>
+      <artifactId>ome-mdbtools</artifactId>
+      <version>${ome-mdbtools.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openmicroscopy</groupId>
+      <artifactId>metakit</artifactId>
+      <version>${metakit.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openmicroscopy</groupId>
+      <artifactId>ome-poi</artifactId>
+      <version>${ome-poi.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>edu.ucar</groupId>
+      <artifactId>cdm</artifactId>
+      <version>4.6.13</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.amazonaws</groupId>
+          <artifactId>aws-java-sdk-s3</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.beust</groupId>
+          <artifactId>jcommander</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.google.protobuf</groupId>
+          <artifactId>protobuf-java</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>edu.ucar</groupId>
+          <artifactId>quartz</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>edu.ucar</groupId>
+          <artifactId>udunits</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>net.jcip</groupId>
+          <artifactId>jcip-annotations</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpcore</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jdom</groupId>
+          <artifactId>jdom2</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.quartz-scheduler</groupId>
+          <artifactId>quartz</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>woolz</groupId>
+      <artifactId>JWlz</artifactId>
+      <version>1.4.0</version>
+    </dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.esotericsoftware</groupId>
+      <artifactId>kryo</artifactId>
+      <version>${kryo.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.airlift</groupId>
+      <artifactId>aircompressor</artifactId>
+      <version>0.18</version>
+    </dependency>
+
+    <!-- NB: dependency:analyze has false warning about xml-apis:xml-apis. -->
+
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.3.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>${testng.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>${logback.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.json</groupId>
+    	<artifactId>json</artifactId>
+    	<version>20090211</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+      <version>${sqlite.version}</version>
+    </dependency>
+  </dependencies>
+
+  <properties>
+    <project.rootdir>${basedir}/../..</project.rootdir>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>loci.formats.gui.ImageViewer</mainClass>
+              <packageName>loci.formats</packageName>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <suiteXmlFiles>
+                <suiteXmlFile>test/loci/formats/utests/testng.xml</suiteXmlFile>
+              </suiteXmlFiles>
+              <additionalClasspathElements>
+                <additionalClasspathElement>${basedir}/../../ant/</additionalClasspathElement>
+              </additionalClasspathElements>
+              <systemPropertyVariables>
+                <bioformats_can_do_upgrade_check>false</bioformats_can_do_upgrade_check>
+              </systemPropertyVariables>
+            </configuration>
+          </execution>
+          <execution>
+            <id>missing-mdb-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <suiteXmlFiles>
+                <suiteXmlFile>test/loci/formats/utests/testng-no-mdb.xml</suiteXmlFile>
+              </suiteXmlFiles>
+              <additionalClasspathElements>
+                <additionalClasspathElement>${basedir}/../../ant/</additionalClasspathElement>
+              </additionalClasspathElements>
+              <classpathDependencyExcludes>
+                <classpathDependencyExclude>org.openmicroscopy:ome-mdbtools</classpathDependencyExclude>
+              </classpathDependencyExcludes>
+              <systemPropertyVariables>
+                <bioformats_can_do_upgrade_check>false</bioformats_can_do_upgrade_check>
+              </systemPropertyVariables>
+            </configuration>
+          </execution>
+          <execution>
+            <id>missing-poi-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <suiteXmlFiles>
+                <suiteXmlFile>test/loci/formats/utests/testng-no-poi.xml</suiteXmlFile>
+              </suiteXmlFiles>
+              <additionalClasspathElements>
+                <additionalClasspathElement>${basedir}/../../ant/</additionalClasspathElement>
+              </additionalClasspathElements>
+              <classpathDependencyExcludes>
+                <classpathDependencyExclude>org.openmicroscopy:ome-poi</classpathDependencyExclude>
+              </classpathDependencyExcludes>
+              <systemPropertyVariables>
+                <bioformats_can_do_upgrade_check>false</bioformats_can_do_upgrade_check>
+              </systemPropertyVariables>
+            </configuration>
+          </execution>
+          <execution>
+            <id>missing-netcdf-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <suiteXmlFiles>
+                <suiteXmlFile>test/loci/formats/utests/testng-no-netcdf.xml</suiteXmlFile>
+              </suiteXmlFiles>
+              <additionalClasspathElements>
+                <additionalClasspathElement>${basedir}/../../ant/</additionalClasspathElement>
+              </additionalClasspathElements>
+              <classpathDependencyExcludes>
+                <classpathDependencyExclude>edu.ucar:cdm</classpathDependencyExclude>
+              </classpathDependencyExcludes>
+              <systemPropertyVariables>
+                <bioformats_can_do_upgrade_check>false</bioformats_can_do_upgrade_check>
+              </systemPropertyVariables>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <licenseName>gpl_v2</licenseName>
+          <projectName>OME Bio-Formats package for reading and converting biological file formats.</projectName>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <developers>
+    <developer>
+      <id>melissa</id>
+      <name>Melissa Linkert</name>
+      <email>melissa@glencoesoftware.com</email>
+      <url>https://www.glencoesoftware.com/melissa-linkert.html</url>
+      <organization>Glencoe Software</organization>
+      <organizationUrl>http://glencoesoftware.com/</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+      <timezone>-6</timezone>
+    </developer>
+    <developer>
+      <id>curtis</id>
+      <name>Curtis Rueden</name>
+      <email>ctrueden@wisc.edu</email>
+      <url>http://loci.wisc.edu/people/curtis-rueden</url>
+      <organization>UW-Madison LOCI</organization>
+      <organizationUrl>http://loci.wisc.edu/</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+      <timezone>-6</timezone>
+      <properties>
+        <picUrl>http://loci.wisc.edu/files/loci/images/people/curtis-2010.jpg</picUrl>
+      </properties>
+    </developer>
+    <developer>
+      <id>callan</id>
+      <name>Chris Allan</name>
+      <email>callan@glencoesoftware.com</email>
+      <url>https://glencoesoftware.com/chris-allan.html</url>
+      <organization>Glencoe Software</organization>
+      <organizationUrl>https://glencoesoftware.com</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+      <timezone>0</timezone>
+    </developer>
+  </developers>
+
+  <contributors>
+    <contributor><name>Eric Kjellman</name></contributor>
+    <contributor><name>Brian Loranger</name></contributor>
+    <contributor><name>Eric Albert</name></contributor>
+    <contributor><name>Jonathan Armond</name></contributor>
+    <contributor><name>Simon Blanchoud</name></contributor>
+    <contributor><name>Ghislain Bonamy</name></contributor>
+    <contributor><name>Michel Boudinot</name></contributor>
+    <contributor><name>Jean-Marie Burel</name></contributor>
+    <contributor><name>Thomas Caswell</name></contributor>
+    <contributor><name>Tony Collins</name></contributor>
+    <contributor><name>Dmitry Fedorov</name></contributor>
+    <contributor><name>Zack Galbreath</name></contributor>
+    <contributor><name>Shawn Garbett</name></contributor>
+    <contributor><name>Bram Gerritsen</name></contributor>
+    <contributor><name>John Hansen</name></contributor>
+    <contributor><name>Volker Hartmann</name></contributor>
+    <contributor><name>Mark Hiner</name></contributor>
+    <contributor><name>Sebastien Huart</name></contributor>
+    <contributor><name>Greg Jefferis</name></contributor>
+    <contributor><name>Lee Kamentsky</name></contributor>
+    <contributor><name>Mikhail Kovtun</name></contributor>
+    <contributor><name>Gaëtan Lehmann</name></contributor>
+    <contributor><name>Chris Lesiak</name></contributor>
+    <contributor><name>Cris Luengo</name></contributor>
+    <contributor><name>Rubén Muñoz</name></contributor>
+    <contributor><name>Martin Offterdinger</name></contributor>
+    <contributor><name>Jim Paris</name></contributor>
+    <contributor><name>Nick Perry</name></contributor>
+    <contributor><name>Ville Rantanen</name></contributor>
+    <contributor><name>Wayne Rasband</name></contributor>
+    <contributor><name>Johannes Schindelin</name></contributor>
+    <contributor><name>Brett Shoelson</name></contributor>
+  </contributors>
+
+  <!-- NB: for project parent, in case of partial checkout -->
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    <repository>
+      <id>unidata.releases</id>
+      <url>https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases</url>
+      <snapshots><enabled>false</enabled></snapshots>
+    </repository>
+    <repository>
+      <id>ome</id>
+      <name>OME Artifactory</name>
+      <url>https://artifacts.openmicroscopy.org/artifactory/maven/</url>
+    </repository>
+    <repository>
+      <id>imagej.public</id>
+      <name>ImageJ Maven repositrory</name>
+      <url>https://maven.imagej.net/content/groups/public</url>
+    </repository>
+  </repositories>
+</project>

@@ -1,0 +1,199 @@
+<!--
+build.xml
+
+Master ant build file for Bio-Formats.
+Download Apache Ant from http://ant.apache.org/.
+Type "ant -p" for a list of targets.
+
+===============================================================================
+This build file handles the following components.
+For more information on a component, see the
+build.properties file in that component's subtree.
+
+Bio-Formats
+    A library for reading and writing popular microscopy file formats
+    -=-
+    JAR file:      bio-formats.jar
+    Path:          components/bio-formats
+    Project deps:  Formats Common, OME-XML Java library, JAI Image I/O Tools,
+                   MDB Tools (Java port), Apache Jakarta POI,
+                   Luratech LuraWave stubs
+    Library deps:  JGoodies Forms, Logback, NetCDF,
+                   Simple Logging Facade for Java API, TestNG
+    Optional:      Xalan Serializer, Xalan
+    License:       GPL
+
+
+Plugins for ImageJ
+    A collection of plugins for ImageJ, including the Bio-Formats Importer,
+    Bio-Formats Exporter, Bio-Formats Macro Extensions, Data Browser, Stack
+    Colorizer and Stack Slicer
+    -=-
+    JAR file:      bio-formats_plugins.jar
+    Path:          components/bio-formats-plugins
+    Project deps:  Bio-Formats, Formats Common, OME-XML Java library
+    Library deps:  JGoodies Forms, ImageJ, JUnit, Logback
+    Optional:      (none)
+    License:       GPL
+
+OME-XML Java library
+    A library for working with OME-XML metadata structures
+    -=-
+    JAR file:      ome-xml.jar
+    Path:          components/ome-xml
+    Project deps:  (none)
+    Library deps:  Simple Logging Facade for Java API, TestNG
+    Optional:      Logback
+    License:       GPL
+
+Testing framework
+    Framework for automated and manual testing of software components
+    -=-
+    JAR file:      bio-formats-testing-framework.jar
+    Path:          components/test-suite
+    Project deps:  Bio-Formats, Formats Common, OME I/O
+    Library deps:  Logback, Simple Logging Facade for Java API, TestNG
+    Optional:      (none)
+    License:       BSD
+
+===============================================================================
+The following components are forks of third party projects:
+
+JAI Image I/O Tools
+    Java API to handle JPEG and JPEG2000 files
+    -=-
+    JAR file:      jai_imageio.jar
+    Path:          components/forks/jai
+    Project deps:  (none)
+    Optional:      (none)
+    License:       BSD
+    Project URL:   http://jai-imageio.dev.java.net/
+    Notes:         Used by Bio-Formats to read images compressed with JPEG2000
+                   and lossless JPEG. Modified from the 2008-10-14 source to
+                   include support for the YCbCr color space. Several files in
+                   the com.sun.media.jai packages were removed, as they are not
+                   needed by Bio-Formats, and created an additional dependency.
+                   This component will be removed once our changes have been
+                   added to the official JAI CVS repository.
+
+===============================================================================
+The following components are stubs of third party projects:
+
+Luratech LuraWave stubs
+    Stub of proprietary Java API to handle Luratech LWF compression
+    -=-
+    JAR file:      lwf-stubs.jar
+    Path:          components/stubs/lwf-stubs
+    Project deps:  (none)
+    Optional:      (none)
+    License:       BSD
+    Project URL:   http://www.luratech.com/
+    Notes:         required to compile Bio-Formats's support for Luratech LWF
+                   compression for the Opera Flex format
+
+===============================================================================
+The following external dependencies (in the jar folder) may be required:
+Ant-Contrib
+    JAR file:  ant-contrib-1.0b3.jar
+    URL:       http://ant-contrib.sourceforge.net/
+    Notes:     used by tools target to iterate over JAR files ("for" task)
+    License:   Apache
+
+Checkstyle
+    JAR file:  checkstyle-all-5.0.jar
+    URL:       http://checkstyle.sourceforge.net/
+    Notes:     used by style Ant target to check source code style conventions
+    License:   LGPL
+
+Apache Jakarta Commons HttpClient
+    JAR file:  commons-httpclient-2.0-rc2.jar
+    URL:       http://jakarta.apache.org/commons/httpclient/
+    Notes:     required for OME-Java to communicate with OME servers
+    License:   Apache
+
+Apache Jakarta Commons Logging
+    JAR file:  commons-logging.jar
+    URL:       http://jakarta.apache.org/commons/logging/
+    Notes:     used by OME-Java
+    License:   Apache
+
+FindBugs Ant task
+    JAR file:  findbugs-ant.jar
+    URL:       http://findbugs.sourceforge.net/
+    Notes:     used by findbugs Ant target to check for program bugs
+    License:   LGPL
+
+JGoodies Forms
+    JAR file:  jgoodies-forms-1.7.2.jar
+    URL:       http://www.jgoodies.com/freeware/forms/index.html
+    Notes:     used for layout by Data Browser and OME Notes
+    License:   BSD
+
+ImageJ
+    JAR file:  ij.jar
+    URL:       http://rsb.info.nih.gov/ij/
+    Notes:     used by plugins for ImageJ and OME plugins for ImageJ
+    License:   Public domain
+
+Logback
+    JAR file:  logback-core-1.1.1.jar, logback-classic-1.1.1.jar
+    URL:       http://logback.qos.ch
+    Notes:     (none)
+    License:   EPL v1.0 and LGPL 2.1
+
+Native library loader
+    JAR file:  native-lib-loader-2.0.2.jar
+    URL:       http://github.com/scijava/native-lib-loader
+    Notes:     required for loading native libraries
+    License:   BSD
+
+NetCDF
+    JAR file:  netcdf-4.3.22.jar
+    URL:       http://www.unidata.ucar.edu/software/netcdf-java/
+    Notes:     used by Bio-Formats via reflection for HDF support (Imaris 5.5)
+    License:   LGPL
+
+Simple Logging Facade for Java API
+    JAR file:  slf4j-api-1.7.6.jar
+    URL:       http://www.slf4j.org/
+    Notes:     used for all logging in loci.*
+    License:   BSD
+
+Xalan Serializer
+    JAR file:  serializer-2.7.2.jar
+    URL:       http://xalan.apache.org/xalan-j/
+    Notes:     used for OME-XML transformations
+    License:   Apache
+
+TestNG
+    JAR file:  testng-6.8.jar
+    URL:       http://testng.org/
+    Notes:     testing framework used for the automated test suite
+    License:   Apache
+
+Apache Velocity
+    JAR file:  velocity-1.6.3-dep.jar
+    URL:       http://velocity.apache.org/
+    Notes:     used to autogenerate the loci.formats.meta and loci.formats.ome
+               Bio-Formats packages
+    License:   Apache
+
+Xalan
+    JAR file:  xalan-2.7.2.jar
+    URL:       http://xalan.apache.org/xalan-j/
+    Notes:     used for OME-XML transformations
+    License:   Apache
+
+Apache XML-RPC
+    JAR file:  xmlrpc-1.2-b1.jar
+    URL:       http://ws.apache.org/xmlrpc/
+    Notes:     used by OME-Java library to communicate with OME servers
+    License:   Apache
+-->
+
+<project name="Bio-Formats" default="jars" basedir=".">
+  <description>
+    Master build file for all Bio-Formats software components
+  </description>
+  <import file="ant/toplevel.xml"/>
+</project>

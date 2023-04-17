@@ -1,0 +1,440 @@
+<!--
+toplevel.xml
+
+Toplevel targets for Bio-Formats builds.
+Download Apache Ant from http://ant.apache.org/.
+Type "ant -p" for a list of targets.
+-->
+
+<project>
+  <property name="root.dir" location="${basedir}"/>
+  <import file="${root.dir}/ant/global.xml"/>
+
+  <!-- Global build targets -->
+
+  <target name="compile"
+    depends="compile-formats-gpl,
+      compile-bio-formats-plugins,
+      compile-formats-api,
+      compile-formats-bsd,
+      compile-bio-formats-tools,
+      compile-tests,
+      compile-turbojpeg"
+    description="compile classes for all components"/>
+
+  <target name="jars"
+    depends="copy-jars,
+      jar-formats-gpl,
+      jar-bio-formats-plugins,
+      jar-formats-api,
+      jar-formats-bsd,
+      jar-bio-formats-tools,
+      jar-tests,
+      jar-turbojpeg"
+    description="generate JAR files for software packages"/>
+
+  <target name="findbugs"
+    depends="findbugs-formats-gpl,
+      findbugs-bio-formats-plugins,
+      findbugs-formats-api,
+      findbugs-formats-bsd,
+      findbugs-bio-formats-tools,
+      findbugs-tests"
+    description="run findbugs on most components"/>
+
+  <target name="clean"
+    depends="
+      clean-formats-gpl,
+      clean-bio-formats-plugins,
+      clean-formats-api,
+      clean-formats-bsd,
+      clean-bio-formats-tools,
+      clean-tests,
+      clean-turbojpeg,
+      clean-bundles"
+    description="remove build files for all components">
+    <delete dir="${artifact.dir}"/>
+    <delete dir="build"/>
+  </target>
+
+  <target name="test"
+    depends="test-formats-gpl,
+      test-bio-formats-plugins,
+      test-formats-api,
+      test-formats-bsd,
+      test-bio-formats-tools,
+      test-tests,
+      test-turbojpeg"
+    description="compile and run tests for all components">
+  </target>
+
+  <target name="utils"
+    depends="jars,
+      utils-formats-gpl,
+      utils-bio-formats-plugins,
+      utils-formats-bsd"
+    description="compile all extra utilities"/>
+
+  <target name="docs" depends="jars"
+    description="generate the Javadocs for most components">
+    <echo>----------=========== Javadocs ===========----------</echo>
+    <ant dir="components/bundles/bioformats_package" target="docs"/>
+  </target>
+
+  <target name="docs-zip" depends="docs"/>
+
+  <target name="copy-jars" description="copy JARS (deprecated)"/>
+
+  <target name="testing-deps" depends="copy-jars"/>
+
+  <!-- API -->
+
+  <target name="deps-formats-api"
+    depends="copy-jars"/>
+
+  <target name="compile-formats-api" depends="deps-formats-api"
+    description="compile classes for reader and writer APIs">
+    <ant dir="components/formats-api" target="formats-api.compile"/>
+  </target>
+
+  <target name="jar-formats-api" depends="deps-formats-api"
+    description="generate JAR file for reader and writer APIs">
+    <ant dir="components/formats-api" target="formats-api.jar"/>
+  </target>
+
+  <target name="findbugs-formats-api" depends="jar-formats-api"
+    description="run findbugs on reader and writer APIs">
+    <ant dir="components/formats-api" target="formats-api.findbugs"/>
+  </target>
+
+  <target name="clean-formats-api"
+    description="remove build files for reader and writer APIs">
+    <ant dir="components/formats-api" target="formats-api.clean"/>
+  </target>
+
+  <target name="test-formats-api" depends="jar-formats-api, testing-deps"
+    description="compile and run tests for reader and writer APIs">
+    <ant dir="components/formats-api" target="test"/>
+  </target>
+
+  <!-- BSD Implentation -->
+
+  <target name="deps-formats-bsd"
+    depends="copy-jars,
+      jar-formats-api,
+      jar-turbojpeg"/>
+
+  <target name="compile-formats-bsd" depends="deps-formats-bsd"
+    description="compile classes for BSD format implementations">
+    <ant dir="components/formats-bsd" target="formats-bsd.compile"/>
+  </target>
+
+  <target name="jar-formats-bsd" depends="deps-formats-bsd"
+    description="generate JAR file for BSD format implementations">
+    <ant dir="components/formats-bsd" target="formats-bsd.jar"/>
+  </target>
+
+  <target name="findbugs-formats-bsd" depends="jar-formats-bsd"
+    description="run findbugs on BSD format implementations">
+    <ant dir="components/formats-bsd" target="formats-bsd.findbugs"/>
+  </target>
+
+  <target name="clean-formats-bsd"
+    description="remove build files for BSD format implementations">
+    <ant dir="components/formats-bsd" target="formats-bsd.clean"/>
+  </target>
+
+  <target name="utils-formats-bsd" depends="jar-formats-bsd"
+    description="compile extra utilities for BSD format implementations">
+    <ant dir="components/formats-bsd" target="formats-bsd.utils"/>
+  </target>
+
+  <target name="test-formats-bsd" depends="jar-formats-bsd, testing-deps"
+    description="compile and run tests for BSD format implementations">
+    <ant dir="components/formats-bsd" target="test"/>
+  </target>
+
+  <!-- Bio-Formats command line tools -->
+
+  <target name="deps-bio-formats-tools"
+    depends="copy-jars,
+      jar-formats-api,
+      jar-formats-gpl,
+      jar-formats-bsd"/>
+
+  <target name="compile-bio-formats-tools" depends="deps-bio-formats-tools"
+    description="compile classes for Bio-Formats tools">
+    <ant dir="components/bio-formats-tools" target="bio-formats-tools.compile"/>
+  </target>
+
+  <target name="jar-bio-formats-tools" depends="deps-bio-formats-tools"
+    description="generate JAR file for Bio-Formats tools">
+    <ant dir="components/bio-formats-tools" target="bio-formats-tools.jar"/>
+  </target>
+
+  <target name="findbugs-bio-formats-tools" depends="jar-bio-formats-tools"
+    description="run findbugs on Bio-Formats tools">
+    <ant dir="components/bio-formats-tools" target="bio-formats-tools.findbugs"/>
+  </target>
+
+  <target name="clean-bio-formats-tools"
+    depends="clean-formats-api,
+      clean-formats-bsd,
+      clean-formats-gpl"
+    description="remove build files for Bio-Formats tools">
+    <ant dir="components/bio-formats-tools" target="bio-formats-tools.clean"/>
+  </target>
+
+  <target name="test-bio-formats-tools" depends="jar-bio-formats-tools, testing-deps"
+    description="compile and run tests for Bio-Formats tools">
+    <ant dir="components/bio-formats-tools" target="test"/>
+  </target>
+
+  <!-- Bio-Formats -->
+
+  <target name="deps-formats-gpl"
+    depends="copy-jars,
+      jar-formats-api,
+      jar-formats-bsd"/>
+
+  <target name="compile-formats-gpl" depends="deps-formats-gpl"
+    description="compile classes for GPL format implementations">
+    <ant dir="components/formats-gpl" target="formats-gpl.compile"/>
+  </target>
+
+  <target name="jar-formats-gpl" depends="deps-formats-gpl"
+    description="generate JAR file for GPL format implementations">
+    <ant dir="components/formats-gpl" target="formats-gpl.jar"/>
+  </target>
+
+  <target name="findbugs-formats-gpl" depends="jar-formats-gpl"
+    description="run findbugs on Bio-Formats">
+    <ant dir="components/formats-gpl" target="formats-gpl.findbugs"/>
+  </target>
+
+  <target name="clean-formats-gpl"
+    depends="clean-formats-api,
+      clean-formats-bsd"
+    description="remove build files for GPL format implementations">
+    <ant dir="components/formats-gpl" target="formats-gpl.clean"/>
+  </target>
+
+  <target name="utils-formats-gpl" depends="jar-formats-gpl"
+    description="compile extra utilities for GPL format implementations">
+    <ant dir="components/formats-gpl" target="formats-gpl.utils"/>
+  </target>
+
+  <target name="test-formats-gpl" depends="jar-formats-gpl, testing-deps"
+    description="compile and run tests for GPL format implementations">
+    <ant dir="components/formats-gpl" target="test"/>
+  </target>
+
+  <!-- Bio-Formats Plugins for ImageJ -->
+
+  <target name="deps-bio-formats-plugins"
+    depends="copy-jars, jar-formats-gpl,
+      jar-formats-api,
+      jar-formats-bsd"/>
+
+  <target name="compile-bio-formats-plugins" depends="deps-bio-formats-plugins"
+    description="compile classes for Bio-Formats Plugins for ImageJ">
+    <ant dir="components/bio-formats-plugins" target="bio-formats-plugins.compile"/>
+  </target>
+
+  <target name="jar-bio-formats-plugins" depends="deps-bio-formats-plugins"
+    description="generate JAR file for Bio-Formats Plugins for ImageJ">
+    <ant dir="components/bio-formats-plugins" target="bio-formats-plugins.jar"/>
+  </target>
+
+  <target name="findbugs-bio-formats-plugins" depends="jar-bio-formats-plugins"
+    description="run findbugs on Bio-Formats Plugins for ImageJ">
+    <ant dir="components/bio-formats-plugins" target="bio-formats-plugins.findbugs"/>
+  </target>
+
+  <target name="clean-bio-formats-plugins"
+    depends="clean-formats-gpl,
+      clean-formats-api,
+      clean-formats-bsd"
+    description="remove build files for Bio-Formats Plugins for ImageJ">
+    <ant dir="components/bio-formats-plugins" target="bio-formats-plugins.clean"/>
+  </target>
+
+  <target name="utils-bio-formats-plugins" depends="jar-bio-formats-plugins"
+    description="compile extra utilities for Bio-Formats Plugins for ImageJ">
+    <ant dir="components/bio-formats-plugins" target="bio-formats-plugins.utils"/>
+  </target>
+
+  <target name="test-bio-formats-plugins" depends="jar-bio-formats-plugins, testing-deps"
+    description="compile and run tests for Bio-Formats Plugins for ImageJ">
+    <ant dir="components/bio-formats-plugins" target="test"/>
+  </target>
+
+  <!-- Testing framework -->
+
+  <target name="deps-tests"
+    depends="copy-jars, jar-formats-gpl,
+      jar-formats-api,
+      jar-formats-bsd"/>
+
+  <target name="compile-tests" depends="deps-tests"
+    description="compile classes for Bio-Formats testing framework">
+    <ant dir="components/test-suite" target="tests.compile"/>
+  </target>
+
+  <target name="jar-tests" depends="deps-tests"
+    description="generate JAR file for Bio-Formats testing framework">
+    <ant dir="components/test-suite" target="tests.jar"/>
+  </target>
+
+  <target name="findbugs-tests" depends="jar-tests"
+    description="run findbugs on Bio-Formats testing framework">
+    <ant dir="components/test-suite" target="tests.findbugs"/>
+  </target>
+
+  <target name="clean-tests"
+    depends="clean-formats-gpl,
+      clean-formats-api,
+      clean-formats-bsd"
+    description="remove build files for Bio-Formats testing framework">
+    <ant dir="components/test-suite" target="tests.clean"/>
+  </target>
+
+  <target name="test-tests" depends="jar-tests, testing-deps"
+    description="compile and run tests for Bio-Formats testing framework">
+    <ant dir="components/test-suite" target="test"/>
+  </target>
+
+  <!-- Turbojpeg -->
+
+  <target name="deps-turbojpeg" depends="copy-jars"/>
+
+  <target name="compile-turbojpeg" depends="deps-turbojpeg"
+    description="compile classes for Turbojpeg Java bindings">
+    <ant dir="components/forks/turbojpeg" target="turbojpeg.compile"/>
+  </target>
+
+  <target name="jar-turbojpeg" depends="deps-turbojpeg"
+    description="generate JAR file for Turbojpeg Java bindings">
+    <ant dir="components/forks/turbojpeg" target="jar"/>
+  </target>
+
+  <target name="clean-turbojpeg"
+    description="remove build files for Turbojpeg Java bindings">
+    <ant dir="components/forks/turbojpeg" target="turbojpeg.clean"/>
+  </target>
+
+  <target name="test-turbojpeg" depends="jar-turbojpeg, testing-deps"
+    description="compile and run tests for Turbojpeg Java bindings">
+    <ant dir="components/forks/turbojpeg" target="test"/>
+  </target>
+
+  <!-- Tool collections -->
+
+  <target name="clean-bundles"
+    description="remove build files in bundles component">
+    <ant dir="components/bundles/bioformats_package" target="bioformats_package.clean"/>
+    <ant dir="components/bundles/loci_tools" target="loci_tools.clean"/>
+  </target>
+
+  <target name="tools" depends="jars"
+    description="generate JAR file bundles of Bio-Formats and dependencies">
+
+    <echo>----------=========== bioformats_package ===========----------</echo>
+    <ant dir="components/bundles/bioformats_package" target="bundle"/>
+
+    <echo>----------=========== loci_tools ===========----------</echo>
+    <ant dir="components/bundles/loci_tools" target="bundle"/>
+  </target>
+
+  <!-- HACK - limit OS to *nix due to file permission issues -->
+  <target name="dist-bftools" if="isUnix"
+      description="generate a zip bundle of the command line tools">
+    <echo>----------=========== bftools ===========----------</echo>
+    <ant dir="components/bundles/bioformats_package" target="bftools"/>
+  </target>
+
+  <!-- Matlab -->
+  <target name="dist-matlab" depends="tools"
+    description="generate a zip bundle of the Matlab toolbox">
+    <echo>----------=========== bfmatlab ===========----------</echo>
+    <ant dir="components/bundles/bioformats_package" target="bfmatlab"/>
+  </target>
+
+  <target name="test-matlab" description="run Matlab tests" depends="tools">
+    <property environment="env"/>
+    <exec executable="matlab">
+      <env key="MATLABPATH" value="${env.MATLABPATH}:${root.dir}/components/formats-bsd/matlab:${artifact.dir}"/>
+      <arg value="-nodesktop"/>
+      <arg value="-nosplash"/>
+      <arg value="-r"/>
+      <arg value="runtests ${root.dir}/components/formats-bsd/test/matlab"/>
+    </exec>
+  </target>
+
+  <!-- Octave -->
+  <target name="dist-octave" depends="jars" description="generate an Octave package">
+    <echo>-------=========== Octave package ===========-------</echo>
+
+    <tempfile property="temp.file" destDir="${java.io.tmpdir}"/>
+    <copy file="${root.dir}/components/formats-bsd/octave/DESCRIPTION.in"
+          toFile="${temp.file}">
+      <filterset begintoken="$${" endtoken ="}" >
+        <filter token="release.version" value="${release.version}"/>
+        <filter token="DATE" value="${date}"/>
+      </filterset>
+    </copy>
+
+    <tar destfile="${artifact.dir}/bioformats-octave-${release.version}.tar.gz"
+         compression="gzip">
+      <tarfileset dir="${root.dir}/components/formats-bsd/octave"
+                  prefix="bioformats/" excludes="DESCRIPTION.in"/>
+      <tarfileset file="${temp.file}" fullpath="bioformats/DESCRIPTION"/>
+      <tarfileset file="${root.dir}/components/formats-bsd/LICENSE.txt" fullpath="bioformats/COPYING"/>
+      <tarfileset dir="${root.dir}/components/formats-bsd/matlab"
+                  prefix="bioformats/inst/"/>
+    </tar>
+    <delete file="${temp.file}"/>
+  </target>
+
+  <!-- Internal targets -->
+
+  <target name="init"/>
+
+  <!-- Source release -->
+  <target name="release" description="zip the git release as bioformats-[dfsg-]${release.version}.zip">
+    <mkdir dir="${artifact.dir}"/>
+    <exec executable="python" failonerror="true">
+      <arg value="${root.dir}/tools/source-archive.py"/>
+      <arg value="--release=bioformats"/>
+      <arg value="--bioformats-version=${release.version}"/>
+      <arg value="--target=${artifact.dir}"/>
+    </exec>
+    <exec executable="python" failonerror="true">
+      <arg value="${root.dir}/tools/source-archive.py"/>
+      <arg value="--release=bioformats-dfsg"/>
+      <arg value="--bioformats-version=${release.version}"/>
+      <arg value="--target=${artifact.dir}"/>
+    </exec>
+  </target>
+
+  <target name="store-version" description="store version information in a property file">
+    <mkdir dir="${artifact.dir}"/>
+    <delete file="${artifact.dir}/bioformats.properties"/>
+    <propertyfile file="${artifact.dir}/bioformats.properties">
+      <entry key="release.version" value="${release.version}"/>
+    </propertyfile>
+  </target>
+
+  <target name="version" description="print version information">
+    <echo>VERSION=${release.version}
+BUILD_VERSION=${build.version}
+</echo>
+  </target>
+
+  <target name="update-copyright" description="update copyright headers">
+	<property name="executable-update-copyright"
+	            location="tools/update_copyright"/>
+    <exec executable="${executable-update-copyright}"/>
+  </target>
+
+</project>
