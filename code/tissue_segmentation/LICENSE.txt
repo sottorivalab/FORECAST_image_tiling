@@ -1,4 +1,4 @@
-Copyright (C) 2023 by Nick Trahearn n.a.trahearn@gmail.coms
+Copyright (C) 2023 by Nick Trahearn n.a.trahearn@gmail.com
 
 Permission to use, copy, modify, and/or distribute this software for
 any purpose with or without fee is hereby granted.
