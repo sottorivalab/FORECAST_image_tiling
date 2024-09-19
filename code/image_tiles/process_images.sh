@@ -15,7 +15,7 @@ baseDir=$(dirname "$0")
 
 jarPATH="$baseDir/jar"
 codePATH="$baseDir/class"
-openCVPath="$baseDir/src/OpenCV-4.1.2/build/lib"
+openCVPath="$baseDir/3rdparty/OpenCV-4.1.2/build/lib"
 
 CLASSPATH="$CLASSPATH":"$jarPATH/CZIReader-1.7.3.jar:$jarPATH/bioformats_package.jar:$jarPATH/opencv-412.jar:$codePATH"
 
@@ -28,4 +28,3 @@ for imageFile in "$imagePATH"/*.czi; do
     python "$baseDir"/src/writeParamP.py "$imageTilePATH"/param.txt "$imageTilePATH"/param.p
     rm "$imageTilePATH"/param.txt
 done
-
