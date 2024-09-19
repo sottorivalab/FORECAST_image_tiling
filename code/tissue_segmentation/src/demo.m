@@ -1,5 +1,5 @@
-ImageTilesPath = '../../tiles';
-MaskTilesPath = '../../masks';
+ImageTilesPath = '../../../tiles';
+MaskTilesPath = '../../../masks';
 
 TileFormat='jpg';
 
