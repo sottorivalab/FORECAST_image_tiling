@@ -36,6 +36,9 @@ def norm_cws_by_stats(source_path, out_path, source_stats, target_stats, mask_pa
 def norm_cws_by_stats_batch(cws_path, target_path, out_path, cws_mask_path=None, target_mask_path=None, file_pattern='Da*.jpg'):
     target_stats = get_cws_lab_stats(target_path, mask_path=target_mask_path)
     
+    if target_stats is None:
+        raise FileNotFoundError('Provided target image path contains no valid tiles.')
+    
     folders = glob.glob(os.path.join(cws_path, '*'))
     
     for source_path in folders:

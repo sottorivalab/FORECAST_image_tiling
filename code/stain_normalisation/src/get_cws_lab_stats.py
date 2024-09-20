@@ -6,6 +6,9 @@ import os
 def get_cws_lab_stats(cws_path, mask_path=None, file_pattern='Da*.jpg'):
     files = glob.glob(os.path.join(cws_path, file_pattern))
     
+    if not files:
+        return None
+    
     hists = np.zeros((256, 3), dtype=np.int64)
     
     for file in files:
